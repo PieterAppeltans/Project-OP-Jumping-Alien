@@ -1,5 +1,5 @@
 import be.kuleuven.cs.som.annotate.Basic;
-import be.kuleuven.cs.som.annotate.Immutable;
+
 
 /**
  * 
@@ -7,6 +7,8 @@ import be.kuleuven.cs.som.annotate.Immutable;
  *
  */
 public class Mazub {
+	public Mazub(){}
+	
 	// Defensive way
 	@Basic
 	public int getPositionX(){
@@ -24,11 +26,13 @@ public class Mazub {
 	
 	private int positiony;
 	
-	@Basic @Immutable
+	@Basic 
 	public int getWidth(){
 		return this.width;
 	}
 	private int width;
+	@Basic
+	public void setWidth(){}
 	@Basic
 	public int getHeigth(){
 		return this.heigth;
@@ -41,10 +45,16 @@ public class Mazub {
 	
 	public void startMove(){}
 	public void endMove(){}
+	@Basic
 	public double getMaximumHorizontalVelocity(){
 		return this.maximumhorizontalvelocity;
 	}
+	@Basic
 	public void setMaximumHorizontalVelocity(){}
 	private double maximumhorizontalvelocity;
-	
+	public void advanceTime(){}
+	public void startJump(){}
+	public void endJup(){}
+	public void startDuck(){}
+	public void endDuck(){}
 }
