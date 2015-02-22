@@ -9,6 +9,10 @@
 public class IllegalPositionXException extends RuntimeException{
 	/**
 	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+	 * 
 	 * @param positionx 
 	 * 			The x coordinate for this new illegal positionx exception
 	 * @post The positionx of this new illegal positionx exception is equal to the given positionx. | new.getPositionX() = positionx

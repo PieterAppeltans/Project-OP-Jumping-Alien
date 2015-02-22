@@ -35,7 +35,7 @@ public class Mazub {
 	 * Set the x positon of this Mazub to the given positonx
 	 * @param positionx The new x position for this Mazub
 	 * @post The new x position of this mazub equals the given positionx. | new.getPositionX() == positionx
-	 * @throws IllegalPositionXException
+	 * @throws IllegalPositionXException if positionx not in the boundaries of the gameworld. | if (!isValidPositionX(positionx))
 	 */
 	@Basic
 	public void setPositionX(int positionx) throws IllegalPositionXException {
@@ -70,12 +70,29 @@ public class Mazub {
 	 * A variable registering the current positionx of this Mazub.
 	 */
 	private int positionx;
+	
+	/**
+	 * Return the y coordinate of the LB pixel of this Mazub.
+	 * @return
+	 */
 	@Basic
 	public int getPositionY(){
 		return this.positiony;
 	}
+	
+	/**
+	 * Set the positiony of Mazub to the given positiony.
+	 * @param postiony The new y coordinate of the position of Mazub.
+	 * @throws IllegalPositionYExeption if the positiony not in the boundary of the game world. |if (!isValidPositionY(positiony))
+	 * @post The new positiony equals the given positiony | new.getPositionY() == positiony
+	 * 
+	 */
 	@Basic
-	public void setPositionY(int postiony){}
+	public void setPositionY(int positiony) throws IllegalPositionYException{
+		if (!isValidPositionY(positiony))
+			throw new IllegalPositionYException(positiony);
+		this.positiony = positiony;
+	}
 	public static boolean isValidPositionY(int positiony){
 		return (positiony>=getMinPositionY()) && (positiony<=getMaxPositionY());
 	}
@@ -102,9 +119,13 @@ public class Mazub {
 	public int getWidth(){
 		return this.width;
 	}
-	private int width;
+	
 	@Basic
 	public void setWidth(){}
+	/**
+	 * A variable storing the width of Mazub.
+	 */
+	private int width;
 	@Basic
 	public int getHeigth(){
 		return this.heigth;
