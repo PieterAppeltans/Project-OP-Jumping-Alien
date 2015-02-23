@@ -5,7 +5,7 @@ import be.kuleuven.cs.som.annotate.Basic;
  * Mazub is a class to define the player character (Mazub) in the game "Jumping Alien". 
  * 
  * @invar The left bottom pixel of Mazub must always be inside the boundaries of the world. | isValidPositionX(getPositionX())&& isValidPositionY(getPositionY())
- * 
+ * @invar Mazub must have a non-negative heigth and width. The width and height must be valid | isValidHeight(getHeight())&isValidWidth(getWidth())
  *
  * 
  * @invar Mazub is always green.
@@ -114,7 +114,11 @@ public class Mazub {
 	 * A variable registering the current positiony of this Mazub.
 	 */
 	private int positiony;
-	
+	/**
+	 * Returnig the current width of Mazub.
+	 * The width may change during the game, example when ducking.
+	 * @return
+	 */
 	@Basic 
 	public int getWidth(){
 		return this.width;
@@ -126,16 +130,40 @@ public class Mazub {
 	 * A variable storing the width of Mazub.
 	 */
 	private int width;
-	@Basic
-	public int getHeigth(){
-		return this.heigth;
+	public boolean isValidWidth(int width){
+		return width>0;
 	}
+	/**
+	 * Returning the current height of Mazub.
+	 * The width may change during the game, example when ducking.
+	 * @return
+	 */
 	@Basic
-	public void setHeigth(int height){}
-	private int heigth;
-	
+	public int getHeight(){
+		return this.height;
+	}
+	/**
+	 * 
+	 * @param height
+	 */
+	@Basic
+	public void setHeight(int height){}
+	/**
+	 * A variable storing the current height of this Mazub.
+	 */
+	private int height;
+	/**
+	 * 
+	 * @param height
+	 * @return
+	 */
+	public boolean isValidHeight(int height){
+		return height >0;
+	}
 	// Nominal way
-	
+	public void calculateNewVelocity(double currentVelocity,double currentAcceleration){}
+	public void calculateNewPosition(double currentPosition,double currentVelocity,double currentAcceleration){}
+
 	public void startMove(){}
 	public void endMove(){}
 	@Basic
@@ -145,9 +173,27 @@ public class Mazub {
 	@Basic
 	public void setMaximumHorizontalVelocity(){}
 	private double maximumhorizontalvelocity;
+	// Defensive programming
 	public void advanceTime(){}
+	/**
+	 * Returning the vertical acceleration of this Mazub. Equals the gravity constant.
+	 * @return
+	 */
+	private double getAccelerationVertical(){
+		return -10;
+	}
+	public double getStartMovingVelocityVertical(){
+		return 8;
+	}
 	public void startJump(){}
 	public void endJup(){}
 	public void startDuck(){}
 	public void endDuck(){}
+	/**
+	 * Returning the maximum speed of Mazub when he is ducking.
+	 * @return
+	 */
+	public double getMaxSpeedHorizontalWhenDucking(){
+		return 1;
+	}
 }
