@@ -13,7 +13,7 @@ public class IllegalPositionYException extends RuntimeException {
 		 * 
 		 * @param positiony
 		 * 			The y coordinate of the position of this Illegal positiony exception.
-		 * @post The positiony of this new created Illegal positiony exception equals positiony. 
+		 * @post The positiony of this new created Illegal positiony exception equals positiony.| new.getPositionY() == positiony
 		 */
 		public IllegalPositionYException(int positiony){
 			this.positiony = positiony;

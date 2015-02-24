@@ -123,16 +123,31 @@ public class Mazub {
 	public int getWidth(){
 		return this.width;
 	}
-	
+	/**
+	 * Set the width of this Mazub to the given width.
+	 * @param width The new width of this Mazub. 
+	 * @throws IllegalLengthException if the supplied width is not valid. | if (!isValidWidth(width))
+	 * @post The new width of this Mazub equals the given width. | new.getWidth() == width
+	 */
 	@Basic
-	public void setWidth(){}
+	public void setWidth(int width) throws IllegalLengthException{
+		if (! isValidWidth(width))
+			throw new IllegalLengthException(width);
+		this.width = width;
+	}
+	/**
+	 * A method checking whether a given width is possible. 
+	 * @param width The width to be checked.
+	 * @return Width must be a valid for this Mazub. 
+	 */
+	public static boolean isValidWidth(int width){
+		return width >0; // We can change this method later, with an extra condition (eg width<getMaxPositionX())
+	}
 	/**
 	 * A variable storing the width of Mazub.
 	 */
 	private int width;
-	public boolean isValidWidth(int width){
-		return width>0;
-	}
+	
 	/**
 	 * Returning the current height of Mazub.
 	 * The width may change during the game, example when ducking.
@@ -145,55 +160,174 @@ public class Mazub {
 	/**
 	 * 
 	 * @param height
+	 * @throw IllegalLengthException if the given height is not valid | not isValidHeight(height)
+	 * @post The new height of this Mazub equals the given height | new.getHeight() == height
 	 */
 	@Basic
-	public void setHeight(int height){}
+	public void setHeight(int height) throws IllegalLengthException{
+		if (!isValidHeigth(height))
+			throw new IllegalLengthException(height);
+		this.height = height;
+	}
+	
 	/**
-	 * A variable storing the current height of this Mazub.
-	 */
-	private int height;
-	/**
-	 * 
-	 * @param height
-	 * @return
+	 * Checking whether a given height is valid.
+	 * @param height The height to be checked.
+	 * @return True if the width is valid
 	 */
 	public boolean isValidHeight(int height){
 		return height >0;
 	}
+	/**
+	 * A variable storing the current height of this Mazub.
+	 */
+	private int height;
+	
 	// Nominal way
-	public void calculateNewVelocity(double currentVelocity,double currentAcceleration){}
-	public void calculateNewPosition(double currentPosition,double currentVelocity,double currentAcceleration){}
-
-	public void startMove(){}
-	public void endMove(){}
+	public static void calculateNewVelocity(double currentVelocity,double currentAcceleration){
+		
+	}
+	public static void calculateNewPosition(double currentPosition,double currentVelocity,double currentAcceleration){}
+	/**
+	 * @post The new status of ismoving equals true | new.isMoving() == true;
+	 */
+	public void startMove(){
+		ismoving = true;
+	}
+	/**
+	 * @post The new status of ismoving equals false | new.isMoving() == false;
+	 */
+	public void endMove(){
+		ismoving = false;
+	}
+	/**
+	 * Return the current moving status of this Mazub.
+	 * @return
+	 */
+	public boolean isMoving(){
+		return this.ismoving;
+	}
+	/**
+	 * A variable storring the current moving status of this Mazub
+	 */
+	private boolean ismoving;
+	/**
+	 * A method returning the horizontal start speed of this Mazub in m/s. This start speed is always above 1 m/s. 
+	 * @return
+	 */
 	@Basic
-	public double getMaximumHorizontalVelocity(){
-		return this.maximumhorizontalvelocity;
+	public double getHorizontalStartSpeed(){
+		return this.horizontalstartspeed;
+	}
+	/**
+	 * A method to set the initial horizontal speed to a given speed.
+	 * @param speed
+	 * @post if speed <1 
+	 * 			then this.horizontalstartspeed = 1;
+	 * @post if speed > 1
+	 * 			then this.horizontalstartspeed = speed; 
+	 */
+	@Basic
+	public void setHorizontalStartSpeed(double speed){
+		if (speed<1)
+			this.horizontalstartspeed = 1;
+		else
+			this.horizontalstartspeed = speed;
+	}
+	/**
+	 * A method storring the horizontal start speed of this Mazub.
+	 */
+	private double horizontalstartspeed;
+	/**
+	 * A method returning the horizontal acceleration in m/(s^2) of all Mazubs.
+	 * @return
+	 */
+	@Basic
+	public static double getHorizontalAcceleration(){
+		return horizontalacceleration;
+	}
+	/**
+	 * A method to set the horizontal acceleration to a given value
+	 * @param acceleration
+	 * @post if acceleration<0 
+	 * 			then horizontalacceleration = 0;
+	 * @post if acceleration >0
+	 * 			then horizontalacceleration = acceleration; 
+	 */
+	@Basic
+	public static void setHorizontalAcceleration(double acceleration){
+		if (acceleration<0)
+			horizontalacceleration = 0;
+		else
+			horizontalacceleration = acceleration;
+	}
+	/**
+	 * A variable storing the horizontal acceleration of all Mazubs.
+	 */
+	private static double horizontalacceleration;
+	
+	/**
+	 * A method returning the maximum horizontal speed when running in m/s. Is always bigger than the start speed
+	 */
+	public double  getMaxSpeedHorizontalWhenRunning(){
+		return this.maxspeedhorizontalwhenrunning;
+	}
+	/**
+	 * 
+	 * @param speed
+	 * @post if speed < this.getHorizontalStartSpeed()
+	 * 			then this.maxspeedhorizontalwhenrunning = this.getHorizontalStartSpeed()
+	 * @post if speed > this.getHorizontalStartSpeed()
+	 * 			then this.maxspeedhorizontalwhenrunning =speed;
+	 * 
+	 */
+	public void setMaxSpeedHorizontalWhenRunning(int speed){
+		this.maxspeedhorizontalwhenrunning = Math.max(this.getHorizontalStartSpeed(),speed);
+	}
+	/**
+	 * A variable storing the maximum horizontal speed when running in m/s.
+	 */
+	private double maxspeedhorizontalwhenrunning;
+	@Basic
+	public double getMaxSpeedHorizontal(){
+		return this.maxspeedhorizontal;
 	}
 	@Basic
-	public void setMaximumHorizontalVelocity(){}
-	private double maximumhorizontalvelocity;
+	public void setMaxSpeedHorizontal(){}
+	private double maxspeedhorizontal;
+	/**
+	 * Changing a given double in meters to a double in pixels 
+	 * @param metric The length/speed/velocity expressed in meters, m/s, m/(s^2) that has to be changed to pixels, pixels/s,pixels/(s^2) 
+	 * @return metric*
+	 */
+	public static int changeMetricToPixel(double metric){
+		return (int)(metric *100);
+	}
 	// Defensive programming
-	public void advanceTime(){}
+	public void advanceTime(double time){}
+	
+	// Defensively
+	public void startJump(){}
+	public void endJup(){}
 	/**
 	 * Returning the vertical acceleration of this Mazub. Equals the gravity constant.
 	 * @return
 	 */
-	private double getAccelerationVertical(){
+	private static double getAccelerationVertical(){
 		return -10;
 	}
-	public double getStartMovingVelocityVertical(){
+	public static double getStartMovingVelocityVertical(){
 		return 8;
 	}
-	public void startJump(){}
-	public void endJup(){}
 	public void startDuck(){}
 	public void endDuck(){}
 	/**
 	 * Returning the maximum speed of Mazub when he is ducking.
 	 * @return
 	 */
-	public double getMaxSpeedHorizontalWhenDucking(){
+	public static double getMaxSpeedHorizontalWhenDucking(){
 		return 1;
 	}
+	//Nominal
+	public Spite getCurrentSprite(){}
 }
